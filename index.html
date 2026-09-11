@@ -20,237 +20,178 @@ html {
 }
 
 body {
-    background: #f8f7f1;
-    color: #1d241b;
-    font-family: "Cormorant Garamond", serif;
+    background: #faf9f4;
+    color: #30352b;
+    font-family: 'Cormorant Garamond', serif;
     overflow-x: hidden;
 }
 
 /* =========================
-   КОНВЕРТ ЭКРАНЫ
+   ENVELOPE SCREEN
 ========================= */
 
-#intro {
+#opening {
     position: fixed;
     inset: 0;
     z-index: 9999;
+    background:
+        linear-gradient(rgba(228,232,220,.45), rgba(228,232,220,.45)),
+        url("IMG_5944.jpeg") center/cover no-repeat;
 
     display: flex;
     justify-content: center;
     align-items: center;
-
-    background:
-        linear-gradient(rgba(220,225,207,.30), rgba(220,225,207,.30)),
-        url("IMG_5944.jpeg") center/cover no-repeat;
-
-    transition: opacity 1s ease, visibility 1s ease;
+    transition: opacity 1.2s ease, visibility 1.2s ease;
 }
 
-#intro.hide {
+#opening.hide {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
 
-.intro-content {
+.opening-content {
     text-align: center;
     width: 90%;
-    max-width: 430px;
 }
 
-/* 3D конверт */
+.small-title {
+    color: #526d3f;
+    font-size: 20px;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+}
+
+/* 3D envelope */
 
 .envelope {
-    width: 310px;
-    height: 205px;
-    margin: 0 auto 30px;
+    width: 320px;
+    height: 220px;
+    margin: auto;
     position: relative;
-
     cursor: pointer;
     perspective: 1000px;
-
-    filter:
-        drop-shadow(0 18px 22px rgba(0,0,0,.22));
+    filter: drop-shadow(0 20px 25px rgba(0,0,0,.18));
 }
 
 .envelope-body {
     position: absolute;
     inset: 0;
-
-    background: #fffdf8;
-
-    border-radius: 2px;
-
-    box-shadow:
-        inset 0 0 0 1px rgba(0,0,0,.05);
+    background: #fffdf7;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1px rgba(120,120,100,.12);
 }
 
-.envelope-left,
-.envelope-right,
-.envelope-bottom {
+.envelope-body:before {
+    content: "";
     position: absolute;
-    z-index: 3;
-}
-
-.envelope-left {
     left: 0;
     bottom: 0;
-
-    width: 0;
-    height: 0;
-
-    border-top: 103px solid transparent;
-    border-bottom: 102px solid transparent;
-    border-left: 155px solid #eeeae0;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-bottom: 115px solid #f0eee5;
 }
 
-.envelope-right {
-    right: 0;
-    bottom: 0;
-
-    width: 0;
-    height: 0;
-
-    border-top: 103px solid transparent;
-    border-bottom: 102px solid transparent;
-    border-right: 155px solid #e5e1d7;
-}
-
-.envelope-bottom {
+.envelope-body:after {
+    content: "";
+    position: absolute;
     left: 0;
     bottom: 0;
-
-    width: 0;
-    height: 0;
-
-    border-left: 155px solid transparent;
-    border-right: 155px solid transparent;
-    border-bottom: 120px solid #f7f4ec;
+    border-left: 160px solid #e9e7dd;
+    border-top: 110px solid transparent;
 }
 
-.envelope-flap {
+.flap {
     position: absolute;
     top: 0;
     left: 0;
-
     width: 0;
     height: 0;
-
-    border-left: 155px solid transparent;
-    border-right: 155px solid transparent;
-    border-top: 110px solid #fffdf8;
-
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-top: 115px solid #e4e1d5;
     transform-origin: top center;
+    transition: transform 1s cubic-bezier(.4,0,.2,1);
     z-index: 5;
-
-    transition: transform 1s cubic-bezier(.4,.1,.2,1);
 }
 
-.envelope.open .envelope-flap {
+.envelope.open .flap {
     transform: rotateX(180deg);
 }
 
-.wax {
+.seal {
+    position: absolute;
+    z-index: 8;
+    left: 50%;
+    top: 52%;
+    transform: translate(-50%, -50%);
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #f6d97b 0%, #d9a82c 75%);
+    border: 3px solid #c49422;
+    box-shadow:
+        0 4px 8px rgba(0,0,0,.25),
+        inset 0 0 0 3px rgba(255,255,255,.35);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fffdf5;
+    font-size: 26px;
+}
+
+.envelope-names {
     position: absolute;
     z-index: 7;
-
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%, -35%);
-
-    width: 58px;
-    height: 58px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 35% 30%, #fff1a7, #e1ae26 48%, #bd8211);
-
-    border: 3px solid #c7961d;
-
-    box-shadow:
-        0 4px 8px rgba(0,0,0,.18),
-        inset 0 0 0 2px rgba(255,255,255,.35);
-
-    transition: opacity .5s ease;
-}
-
-.wax::after {
-    content: "S&T";
-
-    position: absolute;
-    inset: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: rgba(100,65,0,.7);
-    font-family: Georgia, serif;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.envelope.open .wax {
-    opacity: 0;
-}
-
-.names-small {
-    position: absolute;
-    z-index: 6;
-
-    top: 28px;
-    left: 0;
-    right: 0;
-
+    width: 100%;
+    top: 35px;
     text-align: center;
-
-    color: #476c32;
-
-    font-family: "Great Vibes", cursive;
+    color: #4f6d3c;
+    font-family: 'Great Vibes', cursive;
     font-size: 32px;
 }
 
 .open-text {
-    font-size: 18px;
+    margin-top: 28px;
+    color: #34362f;
+    font-size: 19px;
     letter-spacing: 1px;
-    color: #283021;
 }
 
 /* =========================
-   НЕГИЗГИ САЙТ
+   MAIN PAGE
 ========================= */
 
 #main {
-    opacity: 0;
-    transition: opacity 1.2s ease;
+    display: none;
 }
 
 #main.show {
-    opacity: 1;
+    display: block;
 }
 
 section {
     position: relative;
-    width: 100%;
-    padding: 75px 22px;
+    padding: 70px 22px;
     overflow: hidden;
 }
 
-.container {
+.decor {
+    position: absolute;
     width: 100%;
-    max-width: 620px;
-    margin: auto;
+    height: 100%;
+    inset: 0;
+    pointer-events: none;
 }
 
-.script {
-    font-family: "Great Vibes", cursive;
-    color: #4d7536;
-}
-
-.center {
-    text-align: center;
+.petal {
+    position: absolute;
+    width: 13px;
+    height: 8px;
+    background: rgba(153,166,113,.55);
+    border-radius: 100% 0 100% 0;
+    transform: rotate(35deg);
 }
 
 /* =========================
@@ -259,177 +200,172 @@ section {
 
 .hero {
     min-height: 100vh;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     text-align: center;
 
     background:
-        linear-gradient(rgba(246,246,238,.65), rgba(246,246,238,.8)),
-        url("IMG_5944.jpeg") center/cover no-repeat;
+        linear-gradient(rgba(255,255,255,.48), rgba(255,255,255,.48)),
+        url("IMG_5944.jpeg") center/cover;
 }
 
-.hero-inner {
-    background: rgba(255,255,255,.70);
-    padding: 45px 22px;
+.hero-card {
     width: 100%;
-    max-width: 560px;
-
-    backdrop-filter: blur(5px);
+    max-width: 480px;
+    padding: 45px 25px;
 }
 
-.hero-date {
-    font-size: 19px;
+.invitation-small {
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.names {
+    font-family: 'Great Vibes', cursive;
+    color: #4d7039;
+    font-size: clamp(55px, 14vw, 90px);
+    line-height: 1;
+}
+
+.amp {
+    font-size: .7em;
+}
+
+.date {
+    margin-top: 35px;
+    font-size: 25px;
     letter-spacing: 4px;
-    margin-bottom: 25px;
 }
 
-.hero-names {
-    font-family: "Great Vibes", cursive;
-    color: #477032;
-
-    font-size: clamp(55px, 14vw, 88px);
-    line-height: 1.05;
-
-    margin-bottom: 25px;
+.hero-line {
+    width: 80px;
+    height: 1px;
+    background: #8b9e70;
+    margin: 25px auto;
 }
 
-.hero-sub {
-    font-size: 23px;
-    line-height: 1.5;
+.hero-text {
+    font-size: 21px;
+    line-height: 1.7;
 }
 
 /* =========================
-   ЧАКЫРУУ
+   PHOTO
+========================= */
+
+.photo-section {
+    background: #fffdf8;
+    padding: 40px 18px 70px;
+}
+
+.photo-frame {
+    max-width: 500px;
+    margin: auto;
+    position: relative;
+}
+
+.photo-frame img {
+    width: 100%;
+    display: block;
+    border-radius: 2px;
+    box-shadow: 0 15px 35px rgba(0,0,0,.15);
+}
+
+/* =========================
+   INVITATION TEXT
 ========================= */
 
 .invitation {
-    background: #fffef9;
+    background: #faf9f4;
     text-align: center;
 }
 
-.invitation::before,
-.invitation::after {
-    content: "✦";
-    position: absolute;
-
-    color: #b8c49a;
-    font-size: 20px;
+.script-title {
+    font-family: 'Great Vibes', cursive;
+    color: #4e7139;
+    font-size: 55px;
+    margin-bottom: 30px;
 }
 
-.invitation::before {
-    top: 35px;
-    left: 15%;
-}
-
-.invitation::after {
-    right: 15%;
-    bottom: 35px;
-}
-
-.invitation-title {
-    font-size: 54px;
-    margin-bottom: 35px;
-}
-
-.invitation-text {
+.text {
+    max-width: 650px;
+    margin: auto;
     font-size: 23px;
     line-height: 1.65;
 }
 
-.invited-by {
-    margin-top: 45px;
+.hosts {
+    margin-top: 55px;
 }
 
-.invited-label {
-    font-size: 19px;
-    margin-bottom: 12px;
+.host-label {
+    font-size: 21px;
+    margin-bottom: 15px;
 }
 
-.invited-names {
-    font-size: 42px;
-}
-
-/* =========================
-   СҮРӨТ
-========================= */
-
-.photo-section {
-    padding: 0;
-}
-
-.photo {
-    width: 100%;
-    display: block;
-    height: auto;
-}
-
-.photo-frame {
-    padding: 12px;
-    background: #fff;
+.host-names {
+    font-family: 'Great Vibes', cursive;
+    color: #4e7139;
+    font-size: 53px;
 }
 
 /* =========================
-   ДАТА / ЖЕР
+   DETAILS
 ========================= */
 
 .details {
-    background: #f8f7f1;
+    background: #f4f2e9;
     text-align: center;
+}
+
+.detail-box {
+    max-width: 550px;
+    margin: 20px auto;
+    padding: 35px 20px;
+}
+
+.detail-icon {
+    font-size: 35px;
+    margin-bottom: 12px;
 }
 
 .detail-title {
-    font-size: 56px;
-    margin-bottom: 35px;
+    font-family: 'Great Vibes', cursive;
+    color: #4e7139;
+    font-size: 43px;
 }
 
-.detail-item {
-    margin-bottom: 30px;
+.detail-text {
+    font-size: 23px;
+    line-height: 1.6;
+    margin-top: 8px;
 }
 
-.detail-label {
-    font-size: 18px;
-    color: #6b735f;
-    margin-bottom: 7px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.detail-value {
-    font-size: 29px;
-}
-
-.detail-time {
-    font-family: "Great Vibes", cursive;
-    color: #4d7536;
-    font-size: 54px;
+.restaurant {
+    font-size: 30px;
+    font-weight: 600;
 }
 
 /* =========================
-   КАЛЕНДАРЬ
+   CALENDAR
 ========================= */
 
 .calendar-section {
-    background: #fffef9;
     text-align: center;
-}
-
-.calendar-title {
-    font-family: "Great Vibes", cursive;
-    color: #4d7536;
-    font-size: 52px;
-    margin-bottom: 30px;
+    background: #fffdf8;
 }
 
 .calendar {
-    max-width: 480px;
-    margin: auto;
+    max-width: 390px;
+    margin: 35px auto 0;
 }
 
 .month {
-    font-size: 25px;
+    font-family: 'Great Vibes', cursive;
+    color: #4e7139;
+    font-size: 42px;
     margin-bottom: 20px;
 }
 
@@ -441,33 +377,35 @@ section {
 }
 
 .weekdays div {
-    font-size: 15px;
-    color: #777;
-    padding-bottom: 8px;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .days div {
-    position: relative;
-    min-height: 42px;
-
+    height: 42px;
     display: flex;
-    justify-content: center;
     align-items: center;
-
-    font-size: 19px;
+    justify-content: center;
+    font-size: 18px;
 }
 
-.days .wedding-day {
+.wedding-day {
     width: 38px;
     height: 38px;
     margin: auto;
-
     border-radius: 50%;
-
-    background: #587a40;
+    background: #5b783f;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    box-shadow: 0 4px 12px rgba(70,100,50,.25);
+.time {
+    margin-top: 30px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 45px;
+    color: #4e7139;
 }
 
 /* =========================
@@ -475,49 +413,45 @@ section {
 ========================= */
 
 .countdown-section {
-    padding: 0;
-
     min-height: 550px;
-
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
 
     background:
-        linear-gradient(rgba(47,47,34,.25), rgba(47,47,34,.42)),
-        url("IMG_5945.jpeg") center/cover no-repeat;
+        linear-gradient(rgba(75,67,48,.35), rgba(75,67,48,.35)),
+        url("IMG_5946.jpeg") center/cover;
 }
 
 .countdown-box {
-    width: 90%;
-    max-width: 550px;
-
-    text-align: center;
-
     color: white;
-
-    padding: 45px 15px;
+    width: 100%;
 }
 
 .countdown-title {
-    font-family: "Great Vibes", cursive;
+    font-family: 'Great Vibes', cursive;
     font-size: 57px;
     margin-bottom: 35px;
 }
 
-.timer {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
-.timer-number {
-    font-size: clamp(32px, 9vw, 50px);
-    line-height: 1;
+.counter {
+    min-width: 70px;
 }
 
-.timer-label {
-    margin-top: 10px;
+.counter-number {
+    font-size: 36px;
+    font-weight: 500;
+}
+
+.counter-label {
     font-size: 15px;
     letter-spacing: 1px;
 }
@@ -527,47 +461,36 @@ section {
 ========================= */
 
 .location {
-    background: #fffef9;
     text-align: center;
+    background: #faf9f4;
 }
 
 .location-title {
-    font-family: "Great Vibes", cursive;
-    color: #4d7536;
-    font-size: 58px;
-    margin-bottom: 25px;
+    font-family: 'Great Vibes', cursive;
+    color: #4e7139;
+    font-size: 55px;
 }
 
 .location-address {
-    font-size: 24px;
+    margin-top: 25px;
+    font-size: 23px;
     line-height: 1.6;
-}
-
-.restaurant {
-    margin: 25px 0;
-
-    font-family: Georgia, serif;
-    font-size: 31px;
-    letter-spacing: 2px;
 }
 
 .map-button {
     display: inline-block;
-
-    padding: 13px 35px;
-
-    background: #6f8d58;
-    color: white;
-
-    text-decoration: none;
-
+    margin-top: 30px;
+    padding: 14px 45px;
     border-radius: 30px;
+    background: #718c58;
+    color: white;
+    text-decoration: none;
+    font-size: 19px;
+    transition: .3s;
+}
 
-    font-size: 18px;
-
-    margin-top: 15px;
-
-    box-shadow: 0 6px 15px rgba(70,90,50,.2);
+.map-button:hover {
+    transform: translateY(-2px);
 }
 
 /* =========================
@@ -575,96 +498,63 @@ section {
 ========================= */
 
 .rsvp {
-    background: #f6f6ee;
+    background: #f4f2e9;
     text-align: center;
 }
 
 .rsvp-title {
-    font-family: "Great Vibes", cursive;
-    color: #4d7536;
-    font-size: 57px;
-    margin-bottom: 30px;
+    font-family: 'Great Vibes', cursive;
+    color: #4e7139;
+    font-size: 55px;
 }
 
 .rsvp-text {
-    font-size: 21px;
-    margin-bottom: 25px;
+    margin: 20px auto 35px;
+    font-size: 22px;
 }
 
-.rsvp-form {
-    max-width: 480px;
-    margin: auto;
-}
-
-.option {
-    display: block;
-    text-align: left;
-
-    padding: 12px 0;
-
-    font-size: 19px;
-}
-
-input[type="text"] {
-    width: 100%;
-
-    padding: 15px;
-
-    border: 1px solid #b8b8b0;
-    border-radius: 8px;
-
-    background: white;
-
-    font-family: inherit;
-    font-size: 18px;
-
-    margin-top: 15px;
-}
-
-.submit {
-    width: 100%;
-
-    margin-top: 15px;
-
-    padding: 15px;
-
-    border: none;
-    border-radius: 8px;
-
-    background: #6f8d58;
+.rsvp-button {
+    display: inline-block;
+    padding: 15px 55px;
+    background: #718c58;
     color: white;
-
-    font-family: inherit;
+    text-decoration: none;
+    border-radius: 30px;
     font-size: 20px;
-
-    cursor: pointer;
 }
 
 /* =========================
-   FOOTER
+   FINAL
 ========================= */
 
-.footer {
-    background: #fffef9;
+.final {
+    min-height: 650px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
 
-    padding: 80px 20px 100px;
+    background:
+        linear-gradient(rgba(255,255,255,.28), rgba(255,255,255,.28)),
+        url("IMG_5945.jpeg") center/cover;
 }
 
-.footer-text {
-    font-size: 23px;
-    margin-bottom: 25px;
+.final-content {
+    background: rgba(255,255,255,.82);
+    padding: 45px 25px;
+    max-width: 520px;
 }
 
-.footer-names {
-    font-family: "Great Vibes", cursive;
-    color: #4d7536;
-    font-size: 60px;
+.final-names {
+    font-family: 'Great Vibes', cursive;
+    color: #4e7139;
+    font-size: 62px;
 }
 
-.footer-date {
-    margin-top: 20px;
-    font-size: 18px;
+.final-text {
+    margin-top: 25px;
+    font-size: 22px;
+    line-height: 1.6;
 }
 
 /* =========================
@@ -673,134 +563,82 @@ input[type="text"] {
 
 .music-button {
     position: fixed;
-
-    right: 18px;
-    bottom: 20px;
-
+    right: 20px;
+    bottom: 25px;
     z-index: 1000;
 
-    width: 52px;
-    height: 52px;
-
+    width: 58px;
+    height: 58px;
     border-radius: 50%;
+    border: none;
 
-    border: 1px solid rgba(255,255,255,.8);
-
-    background: rgba(75,100,55,.85);
-
+    background: #718c58;
     color: white;
+    font-size: 25px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-size: 22px;
-
+    box-shadow: 0 5px 18px rgba(0,0,0,.22);
     cursor: pointer;
-
-    box-shadow: 0 5px 15px rgba(0,0,0,.2);
 }
 
-/* =========================
-   ЖАЛБЫРАКТАР
-========================= */
-
-.leaf {
-    position: fixed;
-
-    top: -30px;
-
-    width: 13px;
-    height: 7px;
-
-    background: #bdc99b;
-
-    border-radius: 100% 0 100% 0;
-
-    opacity: .65;
-
-    animation: fall linear infinite;
-
-    pointer-events: none;
-
-    z-index: 10;
+.music-button.playing {
+    animation: rotateMusic 3s linear infinite;
 }
 
-@keyframes fall {
-
-    0% {
-        transform:
-            translateY(-30px)
-            translateX(0)
-            rotate(0deg);
+@keyframes rotateMusic {
+    from {
+        transform: rotate(0deg);
     }
-
-    100% {
-        transform:
-            translateY(110vh)
-            translateX(100px)
-            rotate(360deg);
+    to {
+        transform: rotate(360deg);
     }
 }
 
 /* =========================
-   MOBILE
+   PETALS
 ========================= */
 
-@media (max-width: 500px) {
+.p1 {top:10%;left:12%}
+.p2 {top:22%;right:15%}
+.p3 {top:38%;left:8%}
+.p4 {top:52%;right:10%}
+.p5 {top:70%;left:18%}
+.p6 {top:82%;right:20%}
+.p7 {top:60%;left:50%}
+.p8 {top:30%;left:70%}
+
+@media(max-width:500px) {
 
     .envelope {
-        width: 285px;
-        height: 188px;
+        width: 300px;
+        height: 205px;
     }
 
-    .envelope-left {
-        border-top-width: 94px;
-        border-bottom-width: 94px;
-        border-left-width: 142px;
+    .envelope-body:before {
+        border-left-width: 150px;
+        border-right-width: 150px;
     }
 
-    .envelope-right {
-        border-top-width: 94px;
-        border-bottom-width: 94px;
-        border-right-width: 142px;
+    .envelope-body:after {
+        border-left-width: 150px;
     }
 
-    .envelope-bottom {
-        border-left-width: 142px;
-        border-right-width: 142px;
-        border-bottom-width: 108px;
+    .flap {
+        border-left-width: 150px;
+        border-right-width: 150px;
     }
 
-    .envelope-flap {
-        border-left-width: 142px;
-        border-right-width: 142px;
-        border-top-width: 100px;
+    .envelope-names {
+        font-size: 29px;
     }
 
-    .hero {
-        min-height: 90vh;
-    }
-
-    section {
-        padding: 65px 20px;
-    }
-
-    .invitation-title,
-    .detail-title {
+    .script-title,
+    .location-title,
+    .rsvp-title {
         font-size: 48px;
     }
 
-    .invitation-text {
-        font-size: 21px;
-    }
-
-    .timer {
-        gap: 2px;
-    }
-
-    .countdown-section {
-        min-height: 500px;
+    .host-names {
+        font-size: 46px;
     }
 }
 </style>
@@ -809,33 +647,35 @@ input[type="text"] {
 <body>
 
 <!-- =========================
-     КОНВЕРТ
+     OPENING ENVELOPE
 ========================= -->
 
-<div id="intro">
+<div id="opening">
 
-    <div class="intro-content">
+    <div class="opening-content">
+
+        <div class="small-title">
+            Сиздерге өзгөчө чакыруу
+        </div>
 
         <div class="envelope" id="envelope">
 
             <div class="envelope-body"></div>
 
-            <div class="names-small">
+            <div class="flap"></div>
+
+            <div class="envelope-names">
                 Санжар & Татына
             </div>
 
-            <div class="envelope-left"></div>
-            <div class="envelope-right"></div>
-            <div class="envelope-bottom"></div>
-
-            <div class="envelope-flap"></div>
-
-            <div class="wax"></div>
+            <div class="seal">
+                ♡
+            </div>
 
         </div>
 
         <div class="open-text">
-            Чакыруу баракчасын ачуу үчүн басыңыз
+            Чакыруу баракчасын ачуу үчүн конвертти басыңыз
         </div>
 
     </div>
@@ -844,80 +684,44 @@ input[type="text"] {
 
 
 <!-- =========================
-     МУЗЫКА
+     MAIN WEBSITE
 ========================= -->
 
-<audio id="music" loop preload="auto">
-    <source src="Alex Warren - Ordinary.mp3" type="audio/mpeg">
-</audio>
-
-<button class="music-button" id="musicButton">
-    ♪
-</button>
-
-
-<!-- =========================
-     НЕГИЗГИ САЙТ
-========================= -->
-
-<main id="main">
-
+<div id="main">
 
 <!-- HERO -->
 
 <section class="hero">
 
-    <div class="hero-inner">
-
-        <div class="hero-date">
-            28 · 09 · 2026
-        </div>
-
-        <h1 class="hero-names">
-            Санжар & Татына
-        </h1>
-
-        <p class="hero-sub">
-            Үйлөнүү тоюбузга<br>
-            сиздерди чын жүрөктөн чакырабыз
-        </p>
-
+    <div class="decor">
+        <span class="petal p1"></span>
+        <span class="petal p2"></span>
+        <span class="petal p3"></span>
+        <span class="petal p4"></span>
     </div>
 
-</section>
+    <div class="hero-card">
 
+        <div class="invitation-small">
+            Үйлөнүү тоюбузга
+        </div>
 
-<!-- ЧАКЫРУУ -->
+        <div class="names">
+            Санжар <span class="amp">&</span> Татына
+        </div>
 
-<section class="invitation">
+        <div class="hero-line"></div>
 
-    <div class="container">
-
-        <h2 class="invitation-title script">
-            Урматтуу биздин
-            сүйүктүү конокторубуз!
-        </h2>
-
-        <p class="invitation-text">
-
+        <div class="hero-text">
             Сиздерди биздин үйлөнүү тоюбузга
-            келип, ак дасторконубуздан даам сызып,
-            батаныздарды берип,
-            кубанычыбызга орток болуп кетүүгө
+            келип, кубанычыбызга орток болуп,
+            ак дасторконубуздан даам сызып,
+            кадырлуу коногубуз болууга
             чын жүрөктөн чакырабыз!
+        </div>
 
-        </p>
-
-        <div class="invited-by">
-
-            <div class="invited-label">
-                Тойго чакырган адамдар
-            </div>
-
-            <div class="invited-names script">
-                Акбаргы & Салима
-            </div>
-
+        <div class="date">
+            28.09.2026
         </div>
 
     </div>
@@ -925,65 +729,103 @@ input[type="text"] {
 </section>
 
 
-<!-- СҮРӨТ 1 -->
+<!-- PHOTO -->
 
 <section class="photo-section">
 
     <div class="photo-frame">
-        <img
-            class="photo"
-            src="IMG_5945.jpeg"
-            alt="Санжар жана Татына"
-        >
+        <img src="IMG_5945.jpeg" alt="Санжар жана Татына">
     </div>
 
 </section>
 
 
-<!-- ДАТА -->
+<!-- INVITATION -->
+
+<section class="invitation">
+
+    <div class="decor">
+        <span class="petal p2"></span>
+        <span class="petal p5"></span>
+        <span class="petal p7"></span>
+    </div>
+
+    <h2 class="script-title">
+        Урматтуу биздин
+    </h2>
+
+    <div class="text">
+
+        Сиздерди биздин үйлөнүү тоюбузга
+        келип, ак дасторконубуздан даам сызып,
+        баталарыңызды берип, кубанычыбызга
+        орток болуп кетүүгө чын жүрөктөн чакырабыз!
+
+    </div>
+
+    <div class="hosts">
+
+        <div class="host-label">
+            Той ээлери
+        </div>
+
+        <div class="host-names">
+            Акбаргы & Салима
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DETAILS -->
 
 <section class="details">
 
-    <div class="container">
+    <div class="detail-box">
 
-        <h2 class="detail-title script">
-            Биздин өзгөчө күн
-        </h2>
+        <div class="detail-icon">♡</div>
 
-        <div class="detail-item">
-
-            <div class="detail-label">
-                Күнү
-            </div>
-
-            <div class="detail-value">
-                28-сентябрь, 2026-жыл
-            </div>
-
+        <div class="detail-title">
+            Күнү
         </div>
 
-        <div class="detail-item">
-
-            <div class="detail-label">
-                Сааты
-            </div>
-
-            <div class="detail-time">
-                17:00
-            </div>
-
+        <div class="detail-text">
+            28-сентябрь, 2026-жыл
         </div>
 
-        <div class="detail-item">
+    </div>
 
-            <div class="detail-label">
-                Дареги
-            </div>
 
-            <div class="detail-value">
-                Ноокат району
-            </div>
+    <div class="detail-box">
 
+        <div class="detail-icon">⌚</div>
+
+        <div class="detail-title">
+            Сааты
+        </div>
+
+        <div class="detail-text">
+            17:00
+        </div>
+
+    </div>
+
+
+    <div class="detail-box">
+
+        <div class="detail-icon">⌂</div>
+
+        <div class="detail-title">
+            Ресторан
+        </div>
+
+        <div class="detail-text restaurant">
+            «Бакыт Ордо»
+        </div>
+
+        <div class="detail-text">
+            Ноокат району
         </div>
 
     </div>
@@ -991,72 +833,75 @@ input[type="text"] {
 </section>
 
 
-<!-- КАЛЕНДАРЬ -->
+<!-- CALENDAR -->
 
 <section class="calendar-section">
 
-    <div class="container">
+    <h2 class="script-title">
+        Биздин өзгөчө күн
+    </h2>
 
-        <h2 class="calendar-title">
-            2026-жылдын 28-сентябры
-        </h2>
+    <div class="calendar">
 
-        <div class="calendar">
+        <div class="month">
+            Сентябрь 2026
+        </div>
 
-            <div class="month">
-                Сентябрь 2026
+        <div class="weekdays">
+            <div>Дш</div>
+            <div>Шш</div>
+            <div>Шр</div>
+            <div>Бш</div>
+            <div>Жм</div>
+            <div>Иш</div>
+            <div>Жк</div>
+        </div>
+
+        <div class="days">
+
+            <div></div>
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
+            <div>11</div>
+            <div>12</div>
+            <div>13</div>
+
+            <div>14</div>
+            <div>15</div>
+            <div>16</div>
+            <div>17</div>
+            <div>18</div>
+            <div>19</div>
+            <div>20</div>
+
+            <div>21</div>
+            <div>22</div>
+            <div>23</div>
+            <div>24</div>
+            <div>25</div>
+            <div>26</div>
+            <div>27</div>
+
+            <div class="wedding-day">
+                28
             </div>
 
-            <div class="weekdays">
-                <div>Дш</div>
-                <div>Шш</div>
-                <div>Шр</div>
-                <div>Бш</div>
-                <div>Жм</div>
-                <div>Иш</div>
-                <div>Жк</div>
-            </div>
+            <div>29</div>
+            <div>30</div>
 
-            <div class="days">
+        </div>
 
-                <div> </div>
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-                <div>4</div>
-                <div>5</div>
-                <div>6</div>
-
-                <div>7</div>
-                <div>8</div>
-                <div>9</div>
-                <div>10</div>
-                <div>11</div>
-                <div>12</div>
-                <div>13</div>
-
-                <div>14</div>
-                <div>15</div>
-                <div>16</div>
-                <div>17</div>
-                <div>18</div>
-                <div>19</div>
-                <div>20</div>
-
-                <div>21</div>
-                <div>22</div>
-                <div>23</div>
-                <div>24</div>
-                <div>25</div>
-                <div>26</div>
-                <div>27</div>
-
-                <div class="wedding-day">28</div>
-                <div>29</div>
-                <div>30</div>
-
-            </div>
-
+        <div class="time">
+            саат 17:00
         </div>
 
     </div>
@@ -1070,30 +915,30 @@ input[type="text"] {
 
     <div class="countdown-box">
 
-        <h2 class="countdown-title">
+        <div class="countdown-title">
             Тойго чейин:
-        </h2>
+        </div>
 
-        <div class="timer">
+        <div class="countdown">
 
-            <div>
-                <div class="timer-number" id="days">0</div>
-                <div class="timer-label">КҮН</div>
+            <div class="counter">
+                <div class="counter-number" id="days">00</div>
+                <div class="counter-label">КҮН</div>
             </div>
 
-            <div>
-                <div class="timer-number" id="hours">0</div>
-                <div class="timer-label">СААТ</div>
+            <div class="counter">
+                <div class="counter-number" id="hours">00</div>
+                <div class="counter-label">СААТ</div>
             </div>
 
-            <div>
-                <div class="timer-number" id="minutes">0</div>
-                <div class="timer-label">МҮНӨТ</div>
+            <div class="counter">
+                <div class="counter-number" id="minutes">00</div>
+                <div class="counter-label">МҮНӨТ</div>
             </div>
 
-            <div>
-                <div class="timer-number" id="seconds">0</div>
-                <div class="timer-label">СЕКУНД</div>
+            <div class="counter">
+                <div class="counter-number" id="seconds">00</div>
+                <div class="counter-label">СЕКУНД</div>
             </div>
 
         </div>
@@ -1103,55 +948,33 @@ input[type="text"] {
 </section>
 
 
-<!-- СҮРӨТ 2 -->
-
-<section class="photo-section">
-
-    <div class="photo-frame">
-
-        <img
-            class="photo"
-            src="IMG_5946.jpeg"
-            alt="Wedding"
-        >
-
-    </div>
-
-</section>
-
-
-<!-- ДАРЕК -->
+<!-- LOCATION -->
 
 <section class="location">
 
-    <div class="container">
+    <div class="decor">
+        <span class="petal p1"></span>
+        <span class="petal p6"></span>
+    </div>
 
-        <h2 class="location-title">
-            Дарегибиз:
-        </h2>
+    <div class="location-title">
+        Дарегибиз
+    </div>
 
-        <div class="location-address">
-            Ноокат району
-        </div>
+    <div class="location-address">
 
-        <div class="restaurant">
-            «БАКЫТ ОРДО»
-        </div>
-
-        <div>
-            28-сентябрь, 2026-жыл<br>
-            Саат 17:00
-        </div>
-
-        <a
-            class="map-button"
-            href="https://www.google.com/maps/search/?api=1&query=Бакыт+Ордо+Ноокат"
-            target="_blank"
-        >
-            📍 Картаны көрүү
-        </a>
+        <strong>«Бакыт Ордо»</strong><br>
+        Ноокат району
 
     </div>
+
+    <a
+        class="map-button"
+        href="https://www.google.com/maps/search/?api=1&query=Бакыт+Ордо+Ноокат"
+        target="_blank"
+    >
+        Картадан көрүү
+    </a>
 
 </section>
 
@@ -1160,41 +983,46 @@ input[type="text"] {
 
 <section class="rsvp">
 
-    <div class="container">
+    <div class="rsvp-title">
+        Тойго келесизби?
+    </div>
 
-        <h2 class="rsvp-title">
-            Тойго келесизби?
-        </h2>
+    <div class="rsvp-text">
+        Сиздерди кубанычтуу күнүбүздө
+        күтөбүз!
+    </div>
 
-        <p class="rsvp-text">
-            Келериңиз тууралуу билдирип коюңуз
-        </p>
+    <a
+        class="rsvp-button"
+        href="https://wa.me/?text=Санжар%20%26%20Татанын%20тоюна%20барабыз"
+        target="_blank"
+    >
+        Жооп берүү
+    </a>
 
-        <div class="rsvp-form">
+</section>
 
-            <label class="option">
-                <input type="radio" name="answer">
-                Ооба, барам
-            </label>
 
-            <label class="option">
-                <input type="radio" name="answer">
-                Үй-бүлөм менен барам
-            </label>
+<!-- FINAL PHOTO -->
 
-            <label class="option">
-                <input type="radio" name="answer">
-                Бара албайм
-            </label>
+<section class="final">
 
-            <input
-                type="text"
-                placeholder="Атыңызды жазыңыз"
-            >
+    <div class="final-content">
 
-            <button class="submit">
-                Жөнөтүү
-            </button>
+        <div class="final-names">
+            Санжар & Татына
+        </div>
+
+        <div class="final-text">
+
+            Тойго келип, биз менен бирге
+            кубанычыбызды бөлүшүп,
+            кадырлуу коногубуз болуп кетүүңүздөрдү
+            чыдамсыздык менен күтөбүз!
+
+            <br><br>
+
+            28.09.2026 • 17:00
 
         </div>
 
@@ -1202,72 +1030,60 @@ input[type="text"] {
 
 </section>
 
-
-<!-- FOOTER -->
-
-<footer class="footer">
-
-    <div class="footer-text">
-        Сиздерди урматтоо менен той ээлери:
-    </div>
-
-    <div class="footer-names">
-        Санжар & Татына
-    </div>
-
-    <div class="footer-date">
-        28 · 09 · 2026
-    </div>
-
-</footer>
+</div>
 
 
-</main>
+<!-- =========================
+     MUSIC
+========================= -->
+
+<audio id="music" loop preload="auto">
+    <source src="Alex Warren - Ordinary.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music-button" id="musicButton">
+    ♪
+</button>
 
 
 <script>
 
 /* =========================
-   КОНВЕРТ + МУЗЫКА
+   OPEN ENVELOPE
 ========================= */
 
 const envelope = document.getElementById("envelope");
-const intro = document.getElementById("intro");
+const opening = document.getElementById("opening");
 const main = document.getElementById("main");
+
 const music = document.getElementById("music");
 const musicButton = document.getElementById("musicButton");
 
-let opened = false;
-
 envelope.addEventListener("click", function() {
 
-    if (opened) return;
-
-    opened = true;
-
-    /* Конверт ачылат */
     envelope.classList.add("open");
 
-    /* Музыка башталат */
-    music.volume = 0.65;
+    /* музыка башталат */
+    music.play()
+        .then(() => {
+            musicButton.classList.add("playing");
+        })
+        .catch(() => {});
 
-    music.play().catch(function(error) {
-        console.log("Музыка башталган жок:", error);
-    });
+    setTimeout(() => {
 
-    /* Негизги сайт */
-    setTimeout(function() {
-
-        intro.classList.add("hide");
+        opening.classList.add("hide");
         main.classList.add("show");
 
-    }, 900);
+        document.body.style.overflow = "auto";
+
+    }, 1100);
 
 });
 
 
 /* =========================
-   MUSIC ON/OFF
+   MUSIC BUTTON
 ========================= */
 
 musicButton.addEventListener("click", function() {
@@ -1275,14 +1091,12 @@ musicButton.addEventListener("click", function() {
     if (music.paused) {
 
         music.play();
-
-        musicButton.innerHTML = "♪";
+        musicButton.classList.add("playing");
 
     } else {
 
         music.pause();
-
-        musicButton.innerHTML = "🔇";
+        musicButton.classList.remove("playing");
 
     }
 
@@ -1294,7 +1108,7 @@ musicButton.addEventListener("click", function() {
 ========================= */
 
 const weddingDate =
-    new Date("2026-09-28T17:00:00+06:00").getTime();
+    new Date("September 28, 2026 17:00:00").getTime();
 
 function updateCountdown() {
 
@@ -1304,39 +1118,44 @@ function updateCountdown() {
 
     if (distance <= 0) {
 
-        document.getElementById("days").innerText = "0";
-        document.getElementById("hours").innerText = "0";
-        document.getElementById("minutes").innerText = "0";
-        document.getElementById("seconds").innerText = "0";
+        document.getElementById("days").innerText = "00";
+        document.getElementById("hours").innerText = "00";
+        document.getElementById("minutes").innerText = "00";
+        document.getElementById("seconds").innerText = "00";
 
         return;
     }
 
-    const days =
-        Math.floor(distance / (1000 * 60 * 60 * 24));
+    const days = Math.floor(
+        distance / (1000 * 60 * 60 * 24)
+    );
 
-    const hours =
-        Math.floor(
-            (distance % (1000 * 60 * 60 * 24))
-            / (1000 * 60 * 60)
-        );
+    const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24))
+        / (1000 * 60 * 60)
+    );
 
-    const minutes =
-        Math.floor(
-            (distance % (1000 * 60 * 60))
-            / (1000 * 60)
-        );
+    const minutes = Math.floor(
+        (distance % (1000 * 60 * 60))
+        / (1000 * 60)
+    );
 
-    const seconds =
-        Math.floor(
-            (distance % (1000 * 60))
-            / 1000
-        );
+    const seconds = Math.floor(
+        (distance % (1000 * 60))
+        / 1000
+    );
 
-    document.getElementById("days").innerText = days;
-    document.getElementById("hours").innerText = hours;
-    document.getElementById("minutes").innerText = minutes;
-    document.getElementById("seconds").innerText = seconds;
+    document.getElementById("days").innerText =
+        String(days).padStart(2, "0");
+
+    document.getElementById("hours").innerText =
+        String(hours).padStart(2, "0");
+
+    document.getElementById("minutes").innerText =
+        String(minutes).padStart(2, "0");
+
+    document.getElementById("seconds").innerText =
+        String(seconds).padStart(2, "0");
 }
 
 updateCountdown();
@@ -1345,39 +1164,10 @@ setInterval(updateCountdown, 1000);
 
 
 /* =========================
-   ЖАЛБЫРАК АНИМАЦИЯСЫ
+   START POSITION
 ========================= */
 
-function createLeaf() {
-
-    const leaf = document.createElement("div");
-
-    leaf.className = "leaf";
-
-    leaf.style.left =
-        Math.random() * 100 + "vw";
-
-    leaf.style.animationDuration =
-        (5 + Math.random() * 7) + "s";
-
-    leaf.style.animationDelay =
-        Math.random() * 4 + "s";
-
-    leaf.style.transform =
-        "rotate(" + Math.random() * 360 + "deg)";
-
-    document.body.appendChild(leaf);
-
-    setTimeout(function() {
-        leaf.remove();
-    }, 13000);
-}
-
-for (let i = 0; i < 18; i++) {
-    createLeaf();
-}
-
-setInterval(createLeaf, 900);
+document.body.style.overflow = "hidden";
 
 </script>
 
